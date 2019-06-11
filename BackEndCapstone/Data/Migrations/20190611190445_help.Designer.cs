@@ -4,14 +4,16 @@ using BackEndCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEndCapstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190611190445_help")]
+    partial class help
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,9 +83,9 @@ namespace BackEndCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "06f7d7c6-954d-4158-a85e-a1eb5e1bcc0b",
+                            Id = "1e28cbaf-09a4-4d35-b8fd-2e3c19a7ed47",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "02157956-8aec-4056-b0c1-2d00d44edadd",
+                            ConcurrencyStamp = "663250e0-27ac-4447-9bc4-ddf66641bcf8",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,9 +93,9 @@ namespace BackEndCapstone.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMHf61xlUGu1F8iwWqtDxveP9OtwdNW2G9B2fFt6FOMxxC4/OmvdutMCyp3Xhk27Vw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDZSp0qeepjRF1JgZoML++R86IpyAHetRjx3uS+lwjgVDGoBWhVTKxLYJ6gErsD5uA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cddf423f-8599-4f91-9e9a-6c74680808d0",
+                            SecurityStamp = "cf765692-bbb4-45ca-a83e-8c4e11c82cff",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -213,7 +215,8 @@ namespace BackEndCapstone.Data.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Description")
                         .IsRequired()
