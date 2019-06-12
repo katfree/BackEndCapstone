@@ -4,10 +4,7 @@
 }
 
     
-@if (@Model.Id == @ViewBag.CurrentUser.Id)
-{
 
-}
     <table class="table">
         <thead>
             <tr>
@@ -32,21 +29,25 @@
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserName)
-                    </td>
-                </tr>
-            }
+            {@if (item.Id == @ViewBag.CurrentUser.Id)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                    </tr>
+                }
+
+        }
+
         </tbody>
     </table>

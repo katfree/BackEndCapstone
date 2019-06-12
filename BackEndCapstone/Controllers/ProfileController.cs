@@ -29,11 +29,11 @@ namespace BackEndCapstone.Controllers
         {
             var applicationDbContext = _context.ApplicationUsers ;
             var users = _context.ApplicationUsers;
-            //var currentuser = await GetCurrentUserAsync();
-            ViewData["CurrentUser"] = await GetCurrentUserAsync();
+            var currentuser = await GetCurrentUserAsync();
+            ViewData["CurrentUser"] = currentuser;
 
 
-            return View(await users.ToListAsync());
+            return View(await applicationDbContext.ToListAsync());
         }
     }
 }

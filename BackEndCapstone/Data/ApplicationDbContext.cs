@@ -36,7 +36,7 @@ namespace BackEndCapstone.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             ApplicationUser user = new ApplicationUser
-            {
+            {   Id = "12",
                 FirstName = "Admina",
                 LastName = "Straytor",
                 UserName = "admin",
