@@ -32,7 +32,6 @@ namespace BackEndCapstone.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
 
         [Required]
@@ -42,7 +41,8 @@ namespace BackEndCapstone.Models
         public string ImagePath { get; set; }
 
         [Required]
-        public string TeamId { get; set; }
+        [DisplayName("Team")]
+        public int TeamId { get; set; }
 
         public ApplicationUser User { get; set; }
 

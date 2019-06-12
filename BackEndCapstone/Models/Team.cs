@@ -9,6 +9,7 @@ namespace BackEndCapstone.Models
     public class Team
     {
         [Key]
+        [Display(Name = "Team")]
         public int TeamId { get; set; }
 
         [Required]
