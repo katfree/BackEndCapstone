@@ -9,7 +9,7 @@
 @*<p>
     <a asp-action="Create">Create New</a>
 </p>*@
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -66,7 +66,29 @@
                 <a asp-action="Details" asp-route-id="@item.WatchPartyId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.WatchPartyId">Delete</a>
             </td>*@
-        </tr>
+        @*</tr>
+
 }
     </tbody>
-</table>
+</table>*@
+
+@foreach (var item in Model)
+{
+<div class="card border-secondary mb-3 box-shadow  " style="width: 18rem;">
+    <img src="~/images/partypic/@item.ImagePath" class="card-img-top" alt="...">
+    <div class="card-body ">
+        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+        <p class="card-text text-center"> @Html.DisplayFor(modelItem => item.Description)</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Address)</li>
+        <li class="list-group-item"> @Html.DisplayFor(modelItem => item.Limit)</li>
+        <li class="list-group-item">@Html.DisplayNameFor(model => model.Date)</li>
+        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Team.Name)</li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="btn btn-primary">Button</a>
+    </div>
+</div>
+
+}

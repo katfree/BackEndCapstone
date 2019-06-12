@@ -13,6 +13,9 @@ namespace BackEndCapstone.Models
 
         }
 
+        [Key]
+        public string UserId { get; set; }
+
         [Required]
         public override string UserName { get; set; }
 

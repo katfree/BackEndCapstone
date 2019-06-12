@@ -18,17 +18,13 @@ namespace BackEndCapstone.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly IHostingEnvironment _hostingEnvironment;
-
         private readonly UserManager<ApplicationUser> _userManager;
        
         public WatchPartiesController(ApplicationDbContext ctx,
-                          UserManager<ApplicationUser> userManager,
-                          IHostingEnvironment hostingEnvironment)
+                          UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = ctx;
-            _hostingEnvironment = hostingEnvironment;
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
@@ -37,7 +33,7 @@ namespace BackEndCapstone.Controllers
 
         // GET: WatchParties
         public async Task<IActionResult> Index()
-        {
+        {   
             var applicationDbContext = _context.WatchParty.Include(w => w.User).Include(t => t.Team);
             return View(await applicationDbContext.ToListAsync());
         }

@@ -4,61 +4,64 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+@*<h1>Create</h1>
 
-<h4>WatchParty</h4>
+<h4>WatchParty</h4>*@
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+<div>
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div class="form-row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="watchParty.Title" class="control-label"></label>
                 <input asp-for="watchParty.Title" class="form-control" />
                 <span asp-validation-for="watchParty.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="watchParty.Description" class="control-label"></label>
                 <input asp-for="watchParty.Description" class="form-control" />
                 <span asp-validation-for="watchParty.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
                 <label asp-for="watchParty.Address" class="control-label"></label>
                 <input asp-for="watchParty.Address" class="form-control" />
                 <span asp-validation-for="watchParty.Address" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="watchParty.Limit" class="control-label"></label>
                 <input asp-for="watchParty.Limit" class="form-control" />
                 <span asp-validation-for="watchParty.Limit" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="form-control" type="file" /><br><br>
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
 
                 <label asp-for="watchParty.TeamId" class="control-label"></label>
                 <select asp-for="watchParty.TeamId" class="form-control" asp-items="ViewBag.TeamId">
                     <option value=0>Choose Team</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="watchParty.Date" class="control-label"></label>
-                <input asp-for="watchParty.Date" class="form-control" />
+                <input asp-for="watchParty.Date" class="form-control" value="Select Date" />
                 <span asp-validation-for="watchParty.Date" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="watchParty.UserId" class="form-control" asp-items="ViewBag.UserId" />
-            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" asp-for="watchParty.UserId" class="form-control" asp-items="ViewBag.UserId" />
+        </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+        <div class="custom-file col-md-6">
+            <label asp-for="ImageFile" class="custom-file-label">Upload an image of your space!</label>
+            <input asp-for="ImageFile" class="custom-file-input" type="file" /><br><br>
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>
