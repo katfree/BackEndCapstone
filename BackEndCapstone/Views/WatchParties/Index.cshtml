@@ -1,94 +1,44 @@
-﻿@model IEnumerable<BackEndCapstone.Models.WatchParty>
+﻿@model BackEndCapstone.Models.WatchPartyViewModels.IndexViewModel
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Find a Watch Party! </h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Limit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Team.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Limit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <img src="~/images/partypic/@item.ImagePath" class="" />
-            </td>
+@*<a asp-action="Edit" asp-route-id="@item.WatchPartyId">Edit</a> |
+    <a asp-action="Details" asp-route-id="@item.WatchPartyId">Details</a> |
+    <a asp-action="Delete" asp-route-id="@item.WatchPartyId">Delete</a>*@
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Team.Name)
-            </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.WatchPartyId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.WatchPartyId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WatchPartyId">Delete</a>
-            </td>*@
-        @*</tr>
 
-}
-    </tbody>
-</table>*@
-
-@foreach (var item in Model)
-{
-<div class="card border-secondary mb-3 box-shadow  " style="width: 18rem;">
-    <img src="~/images/partypic/@item.ImagePath" class="card-img-top" alt="...">
-    <div class="card-body ">
-        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
-        <p class="card-text text-center"> @Html.DisplayFor(modelItem => item.Description)</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Address)</li>
-        <li class="list-group-item"> @Html.DisplayFor(modelItem => item.Limit)</li>
-        <li class="list-group-item">@Html.DisplayNameFor(model => model.Date)</li>
-        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Team.Name)</li>
-    </ul>
-    <div class="card-body">
-        <a href="#" class="btn btn-primary">Button</a>
-    </div>
+<div class="form-group col-md-6 pt-3">
+    <form asp-action="Index">
+        <select asp-for="@Model.SelectedTeam" class="form-control" id="SelectedTeam" asp-items=@ViewBag.TeamId>
+            <option value=0>Choose Team</option>
+        </select>
+    <input type ="submit" asp-action="Index"  class="btn btn-secondary" value="Filter ">                
+    </form>
 </div>
 
-}
+<div class="card-columns">
+    @foreach (var item in Model.WatchParties)
+    {
+
+
+        <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
+            <img src="~/images/partypic/@item.ImagePath" class="card-img-top" alt="...">
+            <div class="card-body ">
+                <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Date: @Html.DisplayFor(modelItem => item.Date)</li>
+                <li class="list-group-item">Team: @Html.DisplayFor(modelItem => item.Team.Name)</li>
+            </ul>
+            <div class="card-body">
+                <a asp-action="Details" asp-route-id="@item.WatchPartyId" class="btn btn-primary">View Details</a>
+            </div>
+
+        </div>
+
+    }
+</div>
