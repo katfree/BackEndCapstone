@@ -224,3 +224,12 @@ ul.social-buttons {
         ul.social-buttons li a:hover {
             background-color: #fed136
         }
+
+
+/*.watchpartycard {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-flow: column;
+    flex-wrap: wrap;
+}*/

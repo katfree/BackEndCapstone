@@ -1,53 +1,97 @@
-﻿@model IEnumerable<BackEndCapstone.Models.ApplicationUser>
+﻿@model BackEndCapstone.Models.RegistrationViewModel.UploadProfilePicViewModel
 @{
     ViewData["Title"] = "Index";
 }
+@foreach (var item in Model.IUsers)
+{@if (item.Id == @ViewBag.CurrentUser.Id)
+    {
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-lg-8 order-lg-2">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content py-4">
+                        <div class="tab-pane active" id="profile">
+                            <h5 class="mb-3">
+                                @Html.DisplayFor(modelItem => item.FirstName)
 
-    
+                                @Html.DisplayFor(modelItem => item.LastName)
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>About</h6>
+                                    <p>
+                                    </p>
+                                    <h6>Favorite Teams</h6>
+                                    <p>
+                                    </p>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span>My Watch Parties</h5>
+                                    @*@foreach (var item in Model)*@
+                                    @*{
+                                            if (item.Date >= DateTime.Now)
+                                            {
+                                                <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
+                                                    <img src="~/images/partypic/@item.WatchParties.ImagePath" class="card-img-top" alt="...">
+                                                    <div class="card-body ">
+                                                        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">Date: @Html.DisplayFor(modelItem => item.Date)</li>
+                                                        <li class="list-group-item">Team: @Html.DisplayFor(modelItem => item.Team.Name)</li>
+                                                    </ul>
+                                                    <div class="card-body">
+                                                        <a asp-action="Details" asp-route-id="@item.WatchPartyId" class="btn btn-primary">View Details</a>
+                                                    </div>
+
+                                                </div>
+                                            }
+                                        }*@
+                                </div>
+                            </div>
+                            <!--/row-->
+                        </div>
+                        <div class="tab-pane" id="edit">
+                            <form asp-action="Edit" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="@Model.User.Id" />
+
+                                <div class="form-group">
+                                    <div class="custom-file col-md-6">
+                                        <label asp-for="ImageFile" class="custom-file-label">Upload a Profile Picture!</label>
+                                        <input asp-for="ImageFile" class="custom-file-input" type="file" /><br><br>
+                                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                    </div>
 
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {@if (item.Id == @ViewBag.CurrentUser.Id)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                    </tr>
-                }
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
 
-        }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 order-lg-1 text-center">
+                    <img src="~/images/userprofilepic/@item.ImagePath" class="mx-auto img-fluid img-circle d-block" alt="avatar">
 
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+
+    }
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -32,10 +32,24 @@ namespace BackEndCapstone.Controllers
 
 
         // GET: WatchParties
-        public async Task<IActionResult> Index()
-        {   
-            var applicationDbContext = _context.WatchParty.Include(w => w.User).Include(t => t.Team);
-            return View(await applicationDbContext.ToListAsync());
+        public async Task<IActionResult> Index(string SelectedTeam, IndexViewModel watchParty)
+        {
+            ViewData["TeamId"] = new SelectList(_context.Team, "Name", "Name");
+            if (SelectedTeam != null)
+            {
+                watchParty.WatchParties = _context.WatchParty
+                    .Include(w => w.User)
+                    .Include(t => t.Team)
+                    .Where(tt => tt.Team.Name == SelectedTeam)
+                    .OrderByDescending(p => p.Date);
+                return View(watchParty);
+            }
+            else if (SelectedTeam == "" || SelectedTeam == null)
+            {
+                watchParty.WatchParties = _context.WatchParty.Include(w => w.User).Include(t => t.Team);
+                return View(watchParty);
+            }
+            return View(watchParty);
         }
 
         // GET: WatchParties/Details/5
@@ -48,6 +62,7 @@ namespace BackEndCapstone.Controllers
 
             var watchParty = await _context.WatchParty
                 .Include(w => w.User)
+                .Include(t => t.Team)
                 .FirstOrDefaultAsync(m => m.WatchPartyId == id);
             if (watchParty == null)
             {
@@ -203,6 +218,48 @@ namespace BackEndCapstone.Controllers
         private bool WatchPartyExists(int id)
         {
             return _context.WatchParty.Any(e => e.WatchPartyId == id);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> AttendWatchParty( int WatchPartyId)
+        {
+            
+
+           PartyAttendee partyAttendee = new PartyAttendee();
+            var user = await GetCurrentUserAsync();
+            var watchParty = _context.WatchParty.Where(p => p.WatchPartyId == WatchPartyId ).Include(p => p.PartyAttendees).FirstOrDefault();
+            var attendees = watchParty.PartyAttendees.Select(s => s.UserId);
+           var id = WatchPartyId;
+            var msg = "You are already going!";
+
+
+                if (attendees.Contains(user.Id)) {
+                ViewBag.Message = msg;
+                ViewBag.Message = msg;
+                return RedirectToAction("Details", new { id = id });
+               
+            } 
+                else
+                {
+                    partyAttendee.UserId = user.Id;
+                    partyAttendee.WatchPartyId = watchParty.WatchPartyId;
+
+                    
+                        watchParty.Limit = watchParty.Limit - 1;
+                        _context.Add(partyAttendee);
+                        await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                
+
+                }
+
+            
+
+
+
+
+
         }
     }
 }
