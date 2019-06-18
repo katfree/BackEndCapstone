@@ -1,8 +1,8 @@
-﻿@model IEnumerable<BackEndCapstone.Models.ApplicationUser>
+﻿@model BackEndCapstone.Models.RegistrationViewModel.UploadProfilePicViewModel
 @{
     ViewData["Title"] = "Index";
 }
-@foreach (var item in Model)
+@foreach (var item in Model.IUsers)
 {@if (item.Id == @ViewBag.CurrentUser.Id)
     {
         <div class="container">
@@ -35,123 +35,63 @@
                                 </div>
                                 <div class="col-md-12">
                                     <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span>My Watch Parties</h5>
-                                    <table class="table table-sm table-hover table-striped">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <strong>@Html.DisplayFor(modelItem => item.FirstName) </strong> Is Hosting <strong> 3hwrgfasxZ</strong>
-                                                </td>
-                                            </tr>
+                                    @*@foreach (var item in Model)*@
+                                    @*{
+                                            if (item.Date >= DateTime.Now)
+                                            {
+                                                <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
+                                                    <img src="~/images/partypic/@item.WatchParties.ImagePath" class="card-img-top" alt="...">
+                                                    <div class="card-body ">
+                                                        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">Date: @Html.DisplayFor(modelItem => item.Date)</li>
+                                                        <li class="list-group-item">Team: @Html.DisplayFor(modelItem => item.Team.Name)</li>
+                                                    </ul>
+                                                    <div class="card-body">
+                                                        <a asp-action="Details" asp-route-id="@item.WatchPartyId" class="btn btn-primary">View Details</a>
+                                                    </div>
 
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                            }
+                                        }*@
                                 </div>
                             </div>
                             <!--/row-->
                         </div>
                         <div class="tab-pane" id="edit">
-                            <form role="form">
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Jane">
+                            <form asp-action="Edit" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="@Model.User.Id" />
+
+                                <div class="form-group">
+                                    <div class="custom-file col-md-6">
+                                        <label asp-for="ImageFile" class="custom-file-label">Upload a Profile Picture!</label>
+                                        <input asp-for="ImageFile" class="custom-file-input" type="file" /><br><br>
+                                        <span asp-validation-for="ImageFile" class="text-danger"></span>
                                     </div>
+
+
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Bishop">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="email" value="email@gmail.com">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="url" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="" placeholder="Street">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="text" value="" placeholder="City">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input class="form-control" type="text" value="" placeholder="State">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                    <div class="col-lg-9">
-                                        <select id="user_time_zone" class="form-control" size="0">
-                                            <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                            <option value="Alaska">(GMT-09:00) Alaska</option>
-                                            <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                            <option value="Arizona">(GMT-07:00) Arizona</option>
-                                            <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                            <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                            <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                            <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="janeuser">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <h6 class="mt-2">Upload a different photo</h6>
-                                <label class="custom-file">
-                                    <input type="file" id="file" class="custom-file-input">
-                                    <span class="custom-file-control">Choose file</span>
-                                </label>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-9">
-                                        <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" class="btn btn-primary" value="Save Changes">
-                                    </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 order-lg-1 text-center">
-                    <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-                    
+                    <img src="~/images/userprofilepic/@item.ImagePath" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+
                 </div>
             </div>
         </div>
 
     }
 
-} 
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

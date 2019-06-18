@@ -44,11 +44,12 @@ namespace BackEndCapstone.Controllers
                     .OrderByDescending(p => p.Date);
                 return View(watchParty);
             }
-            else
+            else if (SelectedTeam == "" || SelectedTeam == null)
             {
                 watchParty.WatchParties = _context.WatchParty.Include(w => w.User).Include(t => t.Team);
                 return View(watchParty);
             }
+            return View(watchParty);
         }
 
         // GET: WatchParties/Details/5
@@ -234,8 +235,10 @@ namespace BackEndCapstone.Controllers
 
 
                 if (attendees.Contains(user.Id)) {
-                 ViewBag.Message = msg;
+                ViewBag.Message = msg;
+                ViewBag.Message = msg;
                 return RedirectToAction("Details", new { id = id });
+               
             } 
                 else
                 {

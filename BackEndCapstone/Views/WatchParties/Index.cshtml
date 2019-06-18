@@ -15,6 +15,7 @@
     <form asp-action="Index">
         <select asp-for="@Model.SelectedTeam" class="form-control" id="SelectedTeam" asp-items=@ViewBag.TeamId>
             <option value=0>Choose Team</option>
+            <option value="">All Teams</option>
         </select>
     <input type ="submit" asp-action="Index"  class="btn btn-secondary" value="Filter ">                
     </form>
@@ -23,8 +24,8 @@
 <div class="card-columns">
     @foreach (var item in Model.WatchParties)
     {
-
-
+        if (item.Date >= DateTime.Now)
+        {
         <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
             <img src="~/images/partypic/@item.ImagePath" class="card-img-top" alt="...">
             <div class="card-body ">
@@ -39,6 +40,6 @@
             </div>
 
         </div>
-
+        }
     }
 </div>
