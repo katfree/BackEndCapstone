@@ -30,7 +30,7 @@ namespace BackEndCapstone.Controllers
         public async Task<IActionResult> Index(UploadProfilePicViewModel viewModel)
         {
             viewModel.IUsers = _context.ApplicationUsers.Include(w => w.WatchParties).Include(p => p.PartyAttendees) ;
-            var users = _context.ApplicationUsers;
+            viewModel.watchParty = _context.WatchParty.Include(u => u.User).Include(p => p.PartyAttendees);
             var currentuser = await GetCurrentUserAsync();
             ViewData["CurrentUser"] = currentuser;
 
