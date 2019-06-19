@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using BackEndCapstone.Models.WatchPartyViewModels;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BackEndCapstone.Controllers
 {
@@ -67,6 +68,17 @@ namespace BackEndCapstone.Controllers
             if (watchParty == null)
             {
                 return NotFound();
+            }
+
+            var attendees = _context.PartyAttendee.Where(pa => pa.WatchPartyId == id);
+            var currentUser = await GetCurrentUserAsync();
+
+            foreach(var x in attendees)
+            {
+                if (x.UserId == currentUser.Id)
+                {
+                    ViewData["attendee"] = x;
+                }
             }
 
             return View(watchParty);
@@ -237,8 +249,7 @@ namespace BackEndCapstone.Controllers
                 if (attendees.Contains(user.Id)) {
                 ViewBag.Message = msg;
                 ViewBag.Message = msg;
-                return RedirectToAction("Details", new { id = id });
-               
+                return RedirectToAction(nameof(Index));
             } 
                 else
                 {
@@ -254,12 +265,24 @@ namespace BackEndCapstone.Controllers
 
                 }
 
+        }
+
+        public async Task<IActionResult> CancelAttendance(int WatchPartyId)
+        {
+            var id = WatchPartyId;
+            var attendees = _context.PartyAttendee.Where(pa => pa.WatchPartyId == id);
+            var currentUser = await GetCurrentUserAsync();
+
+            foreach (var x in attendees)
+            {
+                if (x.UserId == currentUser.Id)
+                {
+                   _context.PartyAttendee.Remove(x);
+                }
+            }
             
-
-
-
-
-
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
