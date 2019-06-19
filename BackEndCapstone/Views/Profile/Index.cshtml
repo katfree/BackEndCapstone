@@ -25,7 +25,7 @@
                                 @Html.DisplayFor(modelItem => item.LastName)
 
                             </h5>
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-md-6">
                                     <h6>About</h6>
                                     <p>
@@ -34,37 +34,8 @@
                                     <p>
                                     </p>
                                 </div>
-                                <div class="col-md-12">
-                                    <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span>My Watch Parties</h5>
-                                    @foreach (var items in Model.watchParty)
-                                    {if(items.UserId == @ViewBag.CurrentUser.Id) {
-                                            if (items.Date >= DateTime.Now)
-                                            {
-                                <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
-                                    <img src="~/images/partypic/@items.ImagePath" class="card-img-top" alt="...">
-                                    <div class="card-body ">
-                                        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => items.Title)</h5>
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Date: @Html.DisplayFor(modelItem => items.Date)</li>
-                                        <li class="list-group-item">Team: @Html.DisplayFor(modelItem => items.Team.Name)</li>
-                                    </ul>
-                                    <div class="card-body">
-                                        <a asp-action="EditWatchParty" asp-route-id="@items.WatchPartyId" class="btn btn-primary">Edit</a>
-                                    </div>
-                                    <div class="card-body">
-                                        <a asp-action="Delete" asp-route-id="@items.WatchPartyId" class="btn btn-danger">Delete</a>
-                                        
-                                    </div>
-
-
-                                </div>
-                                            }
-                                        }
-                                    }
-                                </div>
-                            </div>
-                            <!--/row-->
+                            </div>*@
+                           
                         </div>
                         <div class="tab-pane" id="edit">
                             <form asp-action="Edit" enctype="multipart/form-data">
@@ -95,10 +66,43 @@
             </div>
         </div>
 
-    }
+        <h5 class="text-center">My Watch Parties</h5>
+        <div class="card-columns">
+            @foreach (var items in Model.watchParty)
+            {
+                if (items.UserId == @ViewBag.CurrentUser.Id)
+                {
+                    if (items.Date >= DateTime.Now)
+                    {
 
-}
+                        <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
+                            @*<img src="~/images/partypic/@items.ImagePath" class="card-img-top" alt="...">*@
+                            <div class="card-body ">
+                                <h5 class="card-title text-center">@Html.DisplayFor(modelItem => items.Title)</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Date: @Html.DisplayFor(modelItem => items.Date)</li>
+                                <li class="list-group-item">Team: @Html.DisplayFor(modelItem => items.Team.Name)</li>
+                            </ul>
+                            <div class="p-2">
+                                <a asp-action="EditWatchParty" asp-route-id="@items.WatchPartyId" class="btn btn-primary">Edit</a>
+                            
+                                <a asp-action="Delete" asp-route-id="@items.WatchPartyId" class="btn btn-danger">Delete</a>
+                                  </div>
+                            
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+                        </div>
+
+                    }
+                }
+
+            }
+        </div>
+            }
+
+            }
+
+            @section Scripts {
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }

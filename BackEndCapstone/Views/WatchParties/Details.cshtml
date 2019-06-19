@@ -42,7 +42,7 @@
     </div>
     <div>
 
-        @if (@Model.Limit > 0 && @ViewBag.attendee == null)
+        @if (@Model.Limit > 0 && @ViewBag.attendee == null && @Model.Date >= DateTime.Now)
         {
 
             <div class="row">
@@ -62,24 +62,26 @@
             <p>*This Watch Party is Full!*</p>
             @if (@ViewBag.attendee == null)
             {
-            <a asp-action="Index" class="btn btn-outline-secondary">Go back to Watch Parties</a>
-             }
+                <a asp-action="Index" class="btn btn-outline-secondary">Go back to Watch Parties</a>
             }
+        }
 
         @if (@ViewBag.attendee != null)
         {
-           <div class="text-center"><h3><strong>*Yay! you're Going!*</strong></h3></div>
-             
+
+            @if (@Model.Date >= DateTime.Now)
+            {<div class="text-center"><h3><strong>*Yay! you're Going!*</strong></h3></div>
                 <div class="pb-2">
                     <form method="post">
                         <button formaction="/WatchParties/CancelAttendance?WatchPartyId=@Model.WatchPartyId" class="btn btn-primary">I don't want to Go anymore :(</button>
 
                     </form>
                 </div>
-                <div>
-                    <a asp-action="Index" class="btn btn-outline-secondary">Go back to Watch Parties</a>
-                </div>
-            
+            }
+            <div>
+                <a asp-action="Index" class="btn btn-outline-secondary">Go back to Watch Parties</a>
+            </div>
+
 
 
 
