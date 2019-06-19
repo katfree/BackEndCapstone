@@ -15,6 +15,6 @@ namespace BackEndCapstone.Models.RegistrationViewModel
 
         public IEnumerable<ApplicationUser> IUsers { get; set; }
 
-
+        public IEnumerable<WatchParty> watchParty { get; set; }
     }
 }
