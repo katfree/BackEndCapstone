@@ -60,8 +60,11 @@
         @if (@Model.Limit == 0)
         {
             <p>*This Watch Party is Full!*</p>
+            @if (@ViewBag.attendee == null)
+            {
             <a asp-action="Index" class="btn btn-outline-secondary">Go back to Watch Parties</a>
-        }
+             }
+            }
 
         @if (@ViewBag.attendee != null)
         {

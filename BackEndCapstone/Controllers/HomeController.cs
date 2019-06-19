@@ -5,14 +5,42 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BackEndCapstone.Models;
+using BackEndCapstone.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEndCapstone.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public HomeController(ApplicationDbContext ctx,
+                          UserManager<ApplicationUser> userManager)
         {
-            return View();
+            _userManager = userManager;
+            _context = ctx;
+        }
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+
+        public async Task<IActionResult> Index()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var attendees = _context.PartyAttendee.Include(w => w.WatchParty).Where(pa => pa.UserId == currentUser.Id);
+            var watchparty = _context.WatchParty.Include(u => u.User).Include(t => t.Team);
+
+            foreach (var x in attendees)
+            {
+                if (x.UserId == currentUser.Id )
+                {
+                    ViewData["imAttending"] = x;
+                }
+            }
+
+            return View(watchparty);
         }
 
         public IActionResult Privacy()
