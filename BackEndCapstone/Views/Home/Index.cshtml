@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BackEndCapstone.Models.WatchParty>
+﻿@model BackEndCapstone.Models.ApplicationUser
 
 @{
     ViewData["Title"] = "Home Page";
@@ -9,18 +9,18 @@
     <h1 class="text-center"> Watch Parties I'm Attending!</h1>
 }
 <div class="card-columns">
-    @foreach (var item in Model)
+    @foreach (var item in Model.PartyAttendees)
     {
-        if (@ViewBag.imAttending != null && item.Date >= DateTime.Now && item.WatchPartyId == @ViewBag.imAttending.WatchPartyId)
+        if (@ViewBag.imAttending != null && item.WatchParty.Date >= DateTime.Now )
         {
             <div class="card border-secondary mb-3 mt-3 box-shadow " style="width: 18rem;">
-                <img src="~/images/partypic/@item.ImagePath" class="card-img-top" alt="...">
+                <img src="~/images/partypic/@item.WatchParty.ImagePath" class="card-img-top" alt="...">
                 <div class="card-body ">
-                    <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.WatchParty.Title)</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Date: @Html.DisplayFor(modelItem => item.Date)</li>
-                    <li class="list-group-item">Team: @Html.DisplayFor(modelItem => item.Team.Name)</li>
+                    <li class="list-group-item">Date: @Html.DisplayFor(modelItem => item.WatchParty.Date)</li>
+                    <li class="list-group-item">Team: @Html.DisplayFor(modelItem => item.WatchParty.Team.Name)</li>
                 </ul>
                 <div class="card-body">
                     <a asp-controller="WatchParties" asp-action="Details" asp-route-id="@item.WatchPartyId" class="btn btn-primary">View Details</a>
@@ -32,7 +32,7 @@
 
     }
 </div>
-@if (@ViewBag.imAttending != null && @ViewBag.imAttending.WatchParty.Date < DateTime.Now)
+@*@if (@ViewBag.imAttending != null && @ViewBag.imAttending.WatchParty.Date < DateTime.Now)
 {
     <h1 class="text-center"> Watch Parties I've already Attended</h1>
 }
@@ -60,7 +60,7 @@
 
         }
 
-    </div>
+    </div>*@
     @if (@ViewBag.imAttending == null)
     {
         <h3>You aren't attending any watch parties yet!</h3>

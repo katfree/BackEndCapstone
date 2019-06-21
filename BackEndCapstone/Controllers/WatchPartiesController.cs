@@ -249,7 +249,7 @@ namespace BackEndCapstone.Controllers
                 if (attendees.Contains(user.Id)) {
                 ViewBag.Message = msg;
                 ViewBag.Message = msg;
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { Id = id });
             } 
                 else
                 {
@@ -260,7 +260,7 @@ namespace BackEndCapstone.Controllers
                         watchParty.Limit = watchParty.Limit - 1;
                         _context.Add(partyAttendee);
                         await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { Id = id });
                 
 
                 }
@@ -272,17 +272,21 @@ namespace BackEndCapstone.Controllers
             var id = WatchPartyId;
             var attendees = _context.PartyAttendee.Where(pa => pa.WatchPartyId == id);
             var currentUser = await GetCurrentUserAsync();
+            var WatchParty = _context.WatchParty.Where(w => w.WatchPartyId == id).FirstOrDefault(); 
 
             foreach (var x in attendees)
             {
                 if (x.UserId == currentUser.Id)
                 {
                    _context.PartyAttendee.Remove(x);
+                    WatchParty.Limit = WatchParty.Limit + 1;
+                    _context.WatchParty.Update(WatchParty);
+
                 }
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", new { Id = id });
         }
     }
 }

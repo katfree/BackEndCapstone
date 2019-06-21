@@ -29,18 +29,24 @@ namespace BackEndCapstone.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await GetCurrentUserAsync();
-            var attendees = _context.PartyAttendee.Include(w => w.WatchParty).Where(pa => pa.UserId == currentUser.Id);
+            var Users = _context.ApplicationUsers.Where(a => a.Id == currentUser.Id).Include(a => a.PartyAttendees).ThenInclude(p => p.WatchParty).ThenInclude(t => t.Team).FirstOrDefault();
             var watchparty = _context.WatchParty.Include(u => u.User).Include(t => t.Team);
+            var attendees = _context.PartyAttendee.Include(w => w.WatchParty).Where(pa => pa.UserId == currentUser.Id);
+            
 
             foreach (var x in attendees)
             {
                 if (x.UserId == currentUser.Id )
                 {
                     ViewData["imAttending"] = x;
+                        
                 }
+                
             }
 
-            return View(watchparty);
+
+
+            return View(Users);
         }
 
         public IActionResult Privacy()
